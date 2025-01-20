@@ -48,7 +48,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
               'avg',
               style: TextStyle(
                 fontSize: 12,
-                color: showAvg ?Colors.black.withOpacity(.5) :gradientColors[0],
+                color: showAvg ? gradientColors[0]: Colors.black.withOpacity(.5),
               ),
             ),
           ),

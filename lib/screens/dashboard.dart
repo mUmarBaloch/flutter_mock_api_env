@@ -1,50 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:smart_shop_admin/screens/sales_dart.dart';
+import 'package:smart_shop_admin/screens/stock/stock_screen.dart';
 import '../charts/line_chart.dart';
 import '../theme.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+
+ 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-  backgroundColor: backgroundColor,
-  title: const Padding(
-    padding: EdgeInsets.all(10),
-    child: Text(
-      'Dashboard',
-      style: TextStyle(color: Colors.white),
-    ),
-  ),
-  centerTitle: true,
-  toolbarHeight: kToolbarHeight + 20,
-  leading: Padding(
-    padding: const EdgeInsets.all(10),
-    child: Builder(
-      builder: (context) => IconButton(
-        icon: const Icon(Icons.menu, color: Colors.white),
-        onPressed: () => Scaffold.of(context).openDrawer(),
-      ),
-    ),
-  ),
-),
-      drawer: const Drawer(
-        backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        title: const Padding(
+          padding: EdgeInsets.all(10),
+          child: Text(
+            'Dashboard',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        centerTitle: true,
+        toolbarHeight: kToolbarHeight + 20,
       ),
       backgroundColor: backgroundColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 18,),
+            const SizedBox(
+              height: 18,
+            ),
             Align(
               alignment: Alignment.center,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 50,vertical:10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 171, 202, 255),
-                  borderRadius: BorderRadius.circular(12), 
+                  borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: Colors.white),
                   boxShadow: [
                     BoxShadow(
@@ -54,24 +55,23 @@ class Dashboard extends StatelessWidget {
                     ),
                   ],
                 ),
-                child:const  Column(
-                  
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children:  [
+                  children: [
                     Text(
                       'Ahmed Super Store',
                       style: TextStyle(
-                        color: Colors.white, 
-                        fontSize: 18, 
-                        fontWeight: FontWeight.bold, 
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 2), 
+                    SizedBox(height: 2),
                     Text(
                       'rafsar town, mirpur khas',
                       style: TextStyle(
-                        color: Colors.white, 
+                        color: Colors.white,
                         fontSize: 16,
                       ),
                     ),
@@ -79,30 +79,37 @@ class Dashboard extends StatelessWidget {
                 ),
               ),
             ),
-const SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
             Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: [
-    _buildInfoCard('Total saved', '\$ 673.50'),
-    _buildInfoCard('Incomes', '\$ 24.50'),
-    _buildInfoCard('Saving rate', '23.50 %'),
-  ],
-),const SizedBox(height: 25,),
-const LineChartSample2(),
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildInfoCard('Total saved', '\$ 673.50'),
+                _buildInfoCard('Incomes', '\$ 24.50'),
+                _buildInfoCard('Saving rate', '23.50 %'),
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Sales last three Months',
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const LineChartSample2(),
           ],
         ),
       ),
+     
     );
   }
 }
-
-
-
-
-
-
-
-
 
 Widget _buildInfoCard(String title, String value) {
   return Container(
