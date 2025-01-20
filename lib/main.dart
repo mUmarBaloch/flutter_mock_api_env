@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop_admin/screens/bottom_nav_wrapper.dart';
+import 'package:smart_shop_admin/views/bottom_nav_wrapper.dart';
+import 'package:smart_shop_admin/views/wrapper.dart';
 
 void main() {
-  runApp(const MaterialApp(home:BottomNavWrapper()));
+  runApp(MaterialApp(home:WrapperScreen()));
 }

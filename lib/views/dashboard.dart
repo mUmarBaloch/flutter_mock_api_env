@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smart_shop_admin/screens/sales_dart.dart';
-import 'package:smart_shop_admin/screens/stock/stock_screen.dart';
-import '../charts/line_chart.dart';
+import 'package:smart_shop_admin/views/sales/sales_screen.dart';
+import 'package:smart_shop_admin/views/stock/stock_screen.dart';
+import '../provider/auth_handel.dart';
+import 'charts/line_chart.dart';
 import '../theme.dart';
+import 'wrapper.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -19,6 +21,13 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: ()async{
+          await Auth.logout();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => WrapperScreen()),
+              );
+        }, icon:const Icon(Icons.logout))],
         backgroundColor: backgroundColor,
         title: const Padding(
           padding: EdgeInsets.all(10),
