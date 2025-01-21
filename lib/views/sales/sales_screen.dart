@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:smart_shop_admin/provider/api.dart';
+import 'package:smart_shop_admin/theme.dart';
+import 'package:smart_shop_admin/views/sales/transaction_view.dart';
 import 'dart:convert';
 
 import '../../model/transaction_model.dart';
@@ -33,10 +36,10 @@ class _SalesScreenState extends State<SalesScreen> {
         throw Exception("Authorization token not found");
       }
 
-      // API URL
-      const url = "https://7756-39-34-143-142.ngrok-free.app/shop/api/sales/";
+     
+      final url = "$baseUrl/shop/api/sales/";
 
-      // Make the GET request
+    
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -114,6 +117,7 @@ class _SalesScreenState extends State<SalesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -123,7 +127,7 @@ class _SalesScreenState extends State<SalesScreen> {
               // Header
               Text(
                 "Sales Analytics",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               SizedBox(height: 10),
               // Summary Cards
@@ -131,18 +135,18 @@ class _SalesScreenState extends State<SalesScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SummaryCard(
-                    title: "Total Transactions",
+                    title: "Sales",
                     value: "${filteredTransactions.length} ",
                     icon: Icons.receipt,
                   ),
                   SummaryCard(
                     title: "Total Income",
-                    value: "\$${getTotalIncome().toStringAsFixed(2)}",
+                    value: "\$${getTotalIncome().toStringAsFixed(0)}",
                     icon: Icons.attach_money,
                   ),
                   SummaryCard(
                     title: "Profit",
-                    value: "\$${getTotalProfit().toStringAsFixed(2)}",
+                    value: "\$${getTotalProfit().toStringAsFixed(0)}",
                     icon: Icons.trending_up,
                   ),
                 ],
@@ -165,7 +169,7 @@ class _SalesScreenState extends State<SalesScreen> {
                         child: Text(
                           startDate == null
                               ? "Select Start Date"
-                              : "Start: ${startDate!.toLocal()}".split(' ')[0],
+                              : "Start: ${startDate!.toLocal()}".split(' ')[1],
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.grey[800]),
                         ),
@@ -186,7 +190,7 @@ class _SalesScreenState extends State<SalesScreen> {
                         child: Text(
                           endDate == null
                               ? "Select End Date"
-                              : "End: ${endDate!.toLocal()}".split(' ')[0],
+                              : "End: ${endDate!.toLocal()}".split(' ')[1],
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.grey[800]),
                         ),
@@ -199,7 +203,7 @@ class _SalesScreenState extends State<SalesScreen> {
               // Transactions List Title
               Text(
                 "Transactions",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               SizedBox(height: 10),
               // Transactions List
@@ -215,7 +219,7 @@ class _SalesScreenState extends State<SalesScreen> {
                               return Container(
                                 margin: const EdgeInsets.symmetric(vertical: 5),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: lightBg,
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
@@ -226,19 +230,21 @@ class _SalesScreenState extends State<SalesScreen> {
                                   ],
                                 ),
                                 child: ListTile(
+                                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>TransactionViewScreen(transaction: transaction)));},
                                   leading: CircleAvatar(
-                                    backgroundColor: Colors.blueAccent,
+                                    backgroundColor:  const Color.fromARGB(255, 70, 134, 244),
                                     child: Icon(Icons.receipt, color: Colors.white),
                                   ),
-                                  title: Text(transaction.receiptNumber, style: TextStyle(fontWeight: FontWeight.bold)),
+                                  title: Text(transaction.receiptNumber, style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black)),
                                   subtitle: Text(
                                    "Date: ${transaction.saleDate.toLocal().toString().split(' ')[0].replaceAll('-', '/')}"
+                                   
 ,
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                   trailing: Text(
                                     "\$${transaction.totalSales.toStringAsFixed(2)}",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                                   ),
                                 ),
                               );
@@ -259,7 +265,7 @@ class _SalesScreenState extends State<SalesScreen> {
 
   // Assuming no profit data is available in the current API response
   double getTotalProfit() {
-    return 0;
+    return filteredTransactions.fold(0, (sum, transaction) => sum + transaction.totalProfit);
   }
 }
 
@@ -277,7 +283,7 @@ class SummaryCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.28,
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: darkBg,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
@@ -290,17 +296,17 @@ class SummaryCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 28, color: Colors.blueAccent),
+          Icon(icon, size: 28, color: const Color.fromARGB(255, 37, 117, 255)),
           SizedBox(height: 8),
           Text(
             title,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 5),
           Text(
             value,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
           ),
         ],
       ),

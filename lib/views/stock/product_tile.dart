@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_shop_admin/model/product_model.dart';
+import 'package:smart_shop_admin/theme.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -23,10 +24,11 @@ class ProductTile extends StatelessWidget {
             children: [
               // Product ID
               CircleAvatar(
+                backgroundColor: lightBg,
                 radius: 25,
                 child: Text(
                   product.id.toString(),
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 14,color:darkBg),
                 ),
               ),
               SizedBox(width: 10),

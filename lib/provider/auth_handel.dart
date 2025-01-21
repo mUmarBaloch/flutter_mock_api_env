@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:smart_shop_admin/provider/api.dart';
 class Auth {
-  static const String _baseUrl = "https://7756-39-34-143-142.ngrok-free.app/auth";
+  static final String _baseUrl = "$baseUrl/auth";
   static const String _loginEndpoint = "/token/login";
   static const String _logoutEndpoint = "/token/logout";
   static const String _authTokenKey = "auth_token";
@@ -27,7 +27,7 @@ class Auth {
           return true;
         }
       }
-       print(response);
+      print(response);
       return false;
     } catch (e) {
       print("Login Error: $e");
@@ -36,31 +36,36 @@ class Auth {
   }
 
   // Logout
- static Future<void> logout() async {
-  try {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString(_authTokenKey); // Get the token from preferences
+  static Future<void> logout() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(_authTokenKey); // Get the token from preferences
 
-    if (token != null) {
-      final url = Uri.parse("$_baseUrl$_logoutEndpoint");
-      await http.post(
-        url,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Token $token", // Pass token directly in headers
-        },
-      );
-      await prefs.remove(_authTokenKey); // Remove token after logout
+      if (token != null) {
+        final url = Uri.parse("$_baseUrl$_logoutEndpoint");
+        await http.post(
+          url,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token $token", // Pass token directly in headers
+          },
+        );
+        await prefs.remove(_authTokenKey); // Remove token after logout
+      }
+    } catch (e) {
+      print("Logout Error: $e");
     }
-  } catch (e) {
-    print("Logout Error: $e");
   }
-}
-
 
   // Check Authentication Status
   static Future<bool> isAuthenticated() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.containsKey(_authTokenKey);
+  }
+
+  // Get Authentication Token
+  static Future<String> getAuthToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_authTokenKey) ?? ''; // Return the stored token, or null if not found
   }
 }

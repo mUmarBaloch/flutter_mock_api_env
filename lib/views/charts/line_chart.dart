@@ -65,13 +65,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
     Widget text;
     switch (value.toInt()) {
       case 2:
-        text = const Text('MAR', style: style);
+        text = const Text('OCT', style: style);
         break;
       case 5:
-        text = const Text('JUN', style: style);
+        text = const Text('NOV', style: style);
         break;
       case 8:
-        text = const Text('SEP', style: style);
+        text = const Text('DEC', style: style);
         break;
       default:
         text = const Text('', style: style);

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_shop_admin/model/product_model.dart';
+import 'package:smart_shop_admin/provider/api.dart';
+import 'package:smart_shop_admin/theme.dart';
 import 'product_tile.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,7 +34,7 @@ class _StockScreenState extends State<StockScreen> {
       final authToken = prefs.getString('auth_token') ?? '';
 
       final response = await http.get(
-        Uri.parse('https://7756-39-34-143-142.ngrok-free.app/shop/api/product-categories/'),
+        Uri.parse('$baseUrl/shop/api/product-categories/'),
         headers: {'Authorization': 'Token $authToken'},
       );
 
@@ -55,7 +57,7 @@ class _StockScreenState extends State<StockScreen> {
       final authToken = prefs.getString('auth_token') ?? '';
 
       final response = await http.get(
-        Uri.parse('https://7756-39-34-143-142.ngrok-free.app/shop/api/products/'),
+        Uri.parse('$baseUrl/shop/api/products/'),
         headers: {'Authorization': 'Token $authToken'},
       );
 
@@ -122,34 +124,45 @@ class _StockScreenState extends State<StockScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Total Stocks: ${displayedProducts.length}'),
+        backgroundColor: backgroundColor,
+        title: Text('Total Stocks: ${displayedProducts.length}',style: TextStyle(color: Colors.white),),
       ),
       body: Column(
         children: [
           // Search Bar
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchController,
-              onChanged: (value) => applyFilters(),
-              decoration: InputDecoration(
-                labelText: 'Search by Title',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
+            child:TextField(
+  controller: _searchController,
+  onChanged: (value) => applyFilters(),
+  decoration: InputDecoration(
+    labelText: 'Search by Title',
+    labelStyle: TextStyle(color: Colors.white),
+    prefixIcon: Icon(Icons.search,color: Colors.white,),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: darkBg), // Default border color
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: darkBg), // Focused border color
+    ),
+  ),
+),
           ),
           // Filter and Sort Options
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 // Filter by Category Dropdown
                 DropdownButton<String>(
                   value: selectedCategory,
+                  
                   hint: Text('Select Category'),
+                 
+                  
                   items: ['All', ...categories].map((category) {
                     return DropdownMenuItem(
                       value: category,

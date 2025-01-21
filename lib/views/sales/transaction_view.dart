@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:smart_shop_admin/provider/api.dart';
 import '../../model/product_model.dart';
 import '../../model/transaction_model.dart';
 
@@ -37,7 +38,7 @@ class _TransactionViewScreenState extends State<TransactionViewScreen> {
 
       // Fetch sales items
       final salesItemsResponse = await http.get(
-        Uri.parse('https://7756-39-34-143-142.ngrok-free.app/shop/api/sale-items/'),
+        Uri.parse('$baseUrl/shop/api/sale-items/'),
         headers: {'Authorization': 'Token $authToken'},
       );
 
@@ -50,7 +51,7 @@ class _TransactionViewScreenState extends State<TransactionViewScreen> {
 
         // Fetch products
         final productsResponse = await http.get(
-          Uri.parse('https://7756-39-34-143-142.ngrok-free.app/shop/api/products/'),
+          Uri.parse('$baseUrl/shop/api/products/'),
           headers: {'Authorization': 'Token $authToken'},
         );
 
