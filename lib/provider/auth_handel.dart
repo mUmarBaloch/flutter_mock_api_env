@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_shop_admin/provider/api.dart';
@@ -29,7 +30,12 @@ class Auth {
       }
       print(response);
       return false;
-    } catch (e) {
+    } 
+    on SocketException {
+      throw 'internet error';
+    }
+    catch (e) {
+
       print("Login Error: $e");
       return false;
     }
