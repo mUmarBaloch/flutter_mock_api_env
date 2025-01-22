@@ -42,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
         throw Exception("Authorization token not found");
       }
 
-      final url = "$baseUrl/shop/api/sales/";
+      final url = "${Api.baseUrl}/shop/api/sales/";
 
       final response = await http.get(
         Uri.parse(url),

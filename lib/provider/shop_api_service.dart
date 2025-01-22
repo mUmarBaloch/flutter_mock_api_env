@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_shop_admin/provider/core/api.dart';
@@ -6,7 +7,7 @@ import 'package:smart_shop_admin/provider/core/api.dart';
 import '../model/shop_model.dart';
 
 class ShopApiService {
-  static final String _baseUrl = "$baseUrl/shop/api/shops/";
+  static final String _baseUrl = "${Api.baseUrl}/shop/api/shops/";
 
   // Method to get the authorization token from SharedPreferences
   static Future<String?> _getAuthToken() async {
@@ -36,7 +37,11 @@ class ShopApiService {
       } else {
         throw Exception('Failed to load shop data');
       }
-    } catch (e) {
+
+    } 
+    on SocketException 
+       { throw 'No internet';}
+    catch (e) {
       throw Exception('Error: $e');
     }
   }

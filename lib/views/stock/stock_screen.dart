@@ -34,7 +34,7 @@ class _StockScreenState extends State<StockScreen> {
       final authToken = prefs.getString('auth_token') ?? '';
 
       final response = await http.get(
-        Uri.parse('$baseUrl/shop/api/product-categories/'),
+        Uri.parse('${Api.baseUrl}/shop/api/product-categories/'),
         headers: {'Authorization': 'Token $authToken'},
       );
 
@@ -57,7 +57,7 @@ class _StockScreenState extends State<StockScreen> {
       final authToken = prefs.getString('auth_token') ?? '';
 
       final response = await http.get(
-        Uri.parse('$baseUrl/shop/api/products/'),
+        Uri.parse('${Api.baseUrl}/shop/api/products/'),
         headers: {'Authorization': 'Token $authToken'},
       );
 

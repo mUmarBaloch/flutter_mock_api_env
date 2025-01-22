@@ -38,7 +38,7 @@ class _TransactionViewScreenState extends State<TransactionViewScreen> {
 
       // Fetch sales items
       final salesItemsResponse = await http.get(
-        Uri.parse('$baseUrl/shop/api/sale-items/'),
+        Uri.parse('${Api.baseUrl}/shop/api/sale-items/'),
         headers: {'Authorization': 'Token $authToken'},
       );
 
@@ -51,7 +51,7 @@ class _TransactionViewScreenState extends State<TransactionViewScreen> {
 
         // Fetch products
         final productsResponse = await http.get(
-          Uri.parse('$baseUrl/shop/api/products/'),
+          Uri.parse('${Api.baseUrl}/shop/api/products/'),
           headers: {'Authorization': 'Token $authToken'},
         );
 

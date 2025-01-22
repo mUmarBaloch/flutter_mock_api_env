@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_shop_admin/provider/core/api.dart';
+import 'package:smart_shop_admin/provider/transactions_api.dart';
 import 'package:smart_shop_admin/theme.dart';
 import 'package:smart_shop_admin/views/sales/transaction_view.dart';
 import 'dart:convert';
@@ -37,29 +38,12 @@ class _SalesScreenState extends State<SalesScreen> {
       }
 
      
-      final url = "$baseUrl/shop/api/sales/";
-
-    
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Authorization': 'Token $authToken',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        // Parse the JSON response
-        final List<dynamic> data = json.decode(response.body);
+       List<Transaction> data =await TransactionsApiService().fetchTransactions();
         setState(() {
-          transactions = data
-              .map((transactionJson) => Transaction.fromJson(transactionJson))
-              .toList();
+          transactions = data;
           filteredTransactions = List.from(transactions); // Initial full list
           isLoading = false;
         });
-      } else {
-        throw Exception("Failed to load transactions");
-      }
     } catch (error) {
       print("Error fetching transactions: $error");
       setState(() {
