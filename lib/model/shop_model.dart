@@ -43,3 +43,25 @@ class ShopModel {
     };
   }
 }
+
+
+List<ShopModel> mockShops = [
+  ShopModel(
+    id: 1,
+    name: "Tech Haven",
+    description: "Your one-stop shop for the latest in electronics and gadgets.",
+    address: "123 Tech Street, Silicon Valley, CA",
+    createdAt: DateTime.parse("2025-01-01T10:00:00Z"),
+    updatedAt: DateTime.parse("2025-01-15T12:00:00Z"),
+    owner: 101,
+  ),
+  ShopModel(
+    id: 2,
+    name: "Style Hub",
+    description: "Trendy apparel and accessories for men and women.",
+    address: "456 Fashion Avenue, New York, NY",
+    createdAt: DateTime.parse("2025-01-02T11:30:00Z"),
+    updatedAt: DateTime.parse("2025-01-20T14:45:00Z"),
+    owner: 102,
+  ),
+];
