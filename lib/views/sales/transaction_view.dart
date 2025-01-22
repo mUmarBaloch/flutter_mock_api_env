@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:smart_shop_admin/provider/api.dart';
+import 'package:smart_shop_admin/provider/core/api.dart';
 import '../../model/product_model.dart';
 import '../../model/transaction_model.dart';
 

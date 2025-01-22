@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_shop_admin/views/charts/chart_colors.dart';
+import 'package:smart_shop_admin/views/core/charts/chart_colors.dart';
 
 class LineChartSample2 extends StatefulWidget {
   const LineChartSample2({super.key});

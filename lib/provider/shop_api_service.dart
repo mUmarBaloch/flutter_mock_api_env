@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_shop_admin/provider/api.dart';
+import 'package:smart_shop_admin/provider/core/api.dart';
 
 import '../model/shop_model.dart';
 

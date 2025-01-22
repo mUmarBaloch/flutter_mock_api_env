@@ -2,17 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_shop_admin/provider/api.dart';
+import 'package:smart_shop_admin/provider/core/api.dart';
 class Auth {
   static final String _baseUrl = "$baseUrl/auth";
-  static const String _loginEndpoint = "/token/login";
-  static const String _logoutEndpoint = "/token/logout";
   static const String _authTokenKey = "auth_token";
 
   // Login
   static Future<bool> login(String username, String password) async {
     try {
-      final url = Uri.parse("$_baseUrl$_loginEndpoint");
+      final url = Uri.parse("$_baseUrl$loginEndpoint");
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
@@ -48,7 +46,7 @@ class Auth {
       final token = prefs.getString(_authTokenKey); // Get the token from preferences
 
       if (token != null) {
-        final url = Uri.parse("$_baseUrl$_logoutEndpoint");
+        final url = Uri.parse("$_baseUrl$logoutEndpoint");
         await http.post(
           url,
           headers: {
